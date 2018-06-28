@@ -24,7 +24,7 @@ const SwipeoutBtn = createReactClass({
     color: PropTypes.string,
     component: PropTypes.node,
     onPress: PropTypes.func,
-    text: PropTypes.string,
+    text: PropTypes.node,
     type: PropTypes.string,
     underlayColor: PropTypes.string,
   },
@@ -303,17 +303,19 @@ const Swipeout = createReactClass({
 
   _openRight: function() {
     this.refs.swipeoutContent.measure((ox, oy, width, height) => {
+      let btnWidth = this.props.buttonWidth || (width/5);
+
       this.setState({
-        btnWidth: (width/5),
-        btnsRightWidth: this.props.right ? (width/5)*this.props.right.length : 0,
+        btnWidth,
+        btnsRightWidth: this.props.right ? btnWidth*this.props.right.length : 0,
       }, () => {
         this._tweenContent('contentPos', -this.state.btnsRightWidth);
         this._callOnOpen();
-        this.setState({ 
-          contentPos: -this.state.btnsRightWidth, 
-          openedLeft: false, 
-          openedRight: true, 
-          swiping: false 
+        this.setState({
+          contentPos: -this.state.btnsRightWidth,
+          openedLeft: false,
+          openedRight: true,
+          swiping: false
         });
       });
     });
@@ -321,17 +323,19 @@ const Swipeout = createReactClass({
 
   _openLeft: function() {
     this.refs.swipeoutContent.measure((ox, oy, width, height) => {
+      let btnWidth = this.props.buttonWidth || (width/5);
+
       this.setState({
-        btnWidth: (width/5),
-        btnsLeftWidth: this.props.left ? (width/5)*this.props.left.length : 0,
+        btnWidth,
+        btnsLeftWidth: this.props.left ? btnWidth*this.props.left.length : 0,
       }, () => {
         this._tweenContent('contentPos', this.state.btnsLeftWidth);
         this._callOnOpen();
-        this.setState({ 
-          contentPos: this.state.btnsLeftWidth, 
-          openedLeft: true, 
-          openedRight: false, 
-          swiping: false 
+        this.setState({
+          contentPos: this.state.btnsLeftWidth,
+          openedLeft: true,
+          openedRight: false,
+          swiping: false
         });
       });
     });
